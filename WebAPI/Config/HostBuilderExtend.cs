@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Model.Other;
 using SqlSugar;
 
 namespace WebAPI.Config
@@ -34,12 +35,15 @@ namespace WebAPI.Config
                 });
                 #endregion
 
-                # region 注册接口和实现层
+                # region 注册注册接口和实现层
                 builder.RegisterModule(new AutofacModuleRegister());
                 #endregion
 
-                # region Automapper映射
+                # region 注册Automapper映射
                 app.Services.AddAutoMapper(typeof(AutoMapperConfigs));
+                #endregion
+                # region 第一步，注册JWT
+                app.Services.Configure<JWTTokenOptions>(app.Configuration.GetSection("JWTTokenOptions"));
                 #endregion
             });
         }
